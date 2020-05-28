@@ -1,20 +1,20 @@
 **************************
-:mod:`custom_wx_icons`
+:mod:`wx_icons_hicolor`
 **************************
 
 .. contents:: Table of Contents
 
-.. automodule:: custom_wx_icons
+.. automodule:: wx_icons_hicolor
     :members:
     :private-members:
     :special-members:
 
 ===================================
-:mod:`custom_wx_icons.__init__`
+:mod:`wx_icons_hicolor.__init__`
 ===================================
 
 
-.. automodule:: custom_wx_icons.__init__
+.. automodule:: wx_icons_hicolor.__init__
     :members:
     :private-members:
     :special-members:
