@@ -16,7 +16,7 @@ Hicolor/Gnome Icon Theme for wxPython
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
 	* - Other
 	  - |license| |language| |commits-since| |commits-latest| |maintained| 
-	
+
 .. |docs| image:: https://readthedocs.org/projects/custom_wx_icons_hicolor/badge/?version=latest
 	:target: https://custom_wx_icons_hicolor.readthedocs.io/en/latest/?badge=latest
 	:alt: Documentation Status
@@ -24,7 +24,7 @@ Hicolor/Gnome Icon Theme for wxPython
 .. |travis| image:: https://img.shields.io/travis/com/domdfcoding/custom_wx_icons_hicolor/master?logo=travis
 	:target: https://travis-ci.com/domdfcoding/custom_wx_icons_hicolor
 	:alt: Travis Build Status
-	
+
 .. |requires| image:: https://requires.io/github/domdfcoding/custom_wx_icons_hicolor/requirements.svg?branch=master
 	:target: https://requires.io/github/domdfcoding/custom_wx_icons_hicolor/requirements/?branch=master
 	:alt: Requirements Status
