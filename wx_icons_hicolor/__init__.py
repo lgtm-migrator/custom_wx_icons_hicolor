@@ -28,7 +28,6 @@
 
 # stdlib
 import sys
-sys.path.append("..")
 
 # 3rd party
 import wx
@@ -40,7 +39,6 @@ from wx_icons_hicolor.icon_theme import HicolorIconTheme
 from wx_icons_hicolor.test import test_icon_theme, test_random_icons
 from wx_icons_hicolor.icon import Icon
 from wx_icons_hicolor.directory import Directory
-
 
 __version__ = "0.1.1"
 
@@ -54,18 +52,18 @@ Gnome Icon Theme Version 3.12.0
 
 class wxHicolorIconTheme(wx.ArtProvider):
 	_hicolor_theme = HicolorIconTheme.create()
-	
+
 	@staticmethod
 	def HasNativeProvider():
 		return False
-	
+
 	@staticmethod
 	def icon2bitmap(icon, size):
 		if icon.scalable:
 			return icon.as_bitmap(size)
 		else:
 			return icon.as_bitmap()
-	
+
 	def CreateBitmap(self, id, client, size):
 		icon = self._hicolor_theme.find_icon(id, size.x, None)
 		if icon:
@@ -76,7 +74,7 @@ class wxHicolorIconTheme(wx.ArtProvider):
 			print("Icon not found in Hicolor theme")
 			print(id)
 			return super().CreateBitmap(id, client, size)
-	
+
 	# # optionally override this one as well
 	# def CreateIconBundle(self, id, client):
 	# 	# Your implementation of CreateIconBundle here
@@ -86,10 +84,10 @@ class wxHicolorIconTheme(wx.ArtProvider):
 if __name__ == '__main__':
 	# theme = HicolorIconTheme.from_configparser(theme_index_path)
 	theme = HicolorIconTheme.create()
-	
+
 	# for directory in theme.directories:
 	# 	print(directory.icons)
-	
+
 	# test_random_icons(theme)
-	
+
 	test_icon_theme(theme, show_success=False)

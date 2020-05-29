@@ -32,9 +32,19 @@ from .icon import Icon
 
 
 class Directory:
+
 	def __init__(
-			self, path, size, scale=1, context='', type='Threshold',
-			max_size=None, min_size=None, threshold=2, theme=''):
+			self,
+			path,
+			size,
+			scale=1,
+			context='',
+			type='Threshold',
+			max_size=None,
+			min_size=None,
+			threshold=2,
+			theme='',
+			):
 		"""
 
 		:param path: The absolute path to the directory
@@ -61,48 +71,48 @@ class Directory:
 		:param theme: The name of the theme this directory is a part of
 		:type theme: str
 		"""
-		
+
 		self.scale = scale
 		self.context = context
 		self.threshold = threshold
 		self.theme = theme
-		
+
 		if not isinstance(path, pathlib.Path):
 			raise TypeError("'path' must be a pathlib.Path object.")
 		self.path = path
-		
+
 		if not isinstance(size, int):
 			raise TypeError("'size' must be a integer.")
 		self.size = size
-		
+
 		if type not in {"Fixed", "Scalable", "Threshold"}:
 			raise ValueError("'type' must be one of 'Fixed', 'Scalable' or 'Threshold'.")
 		self.type = type
-		
+
 		if max_size:
 			if not isinstance(max_size, int):
 				raise TypeError("'max_size' must be a integer.")
 			self.max_size = max_size
 		else:
 			self.max_size = size
-		
+
 		if min_size:
 			if not isinstance(min_size, int):
 				raise TypeError("'min_size' must be a integer.")
 			self.min_size = min_size
 		else:
 			self.min_size = size
-	
+
 	def __iter__(self):
 		for key, value in self.__dict__().items():
 			yield key, value
-	
+
 	def __getstate__(self):
 		return self.__dict__()
-	
+
 	def __setstate__(self, state):
 		self.__init__(**state)
-	
+
 	def __dict__(self):
 		return dict(
 				path=self.path,
@@ -115,18 +125,18 @@ class Directory:
 				threshold=self.threshold,
 				theme=self.theme,
 				)
-	
+
 	def __copy__(self):
 		return self.__class__(**self.__dict__())
-	
+
 	def __deepcopy__(self, memodict={}):
 		return self.__copy__()
-	
+
 	@classmethod
 	def from_configparser(cls, config_section, theme_content_root):
 		if not isinstance(config_section, configparser.SectionProxy):
 			raise TypeError("'config_section' must be a 'configparser.SectionProxy' object")
-		
+
 		path = theme_content_root / pathlib.Path(config_section.name)
 		size = int(config_section.get("Size"))
 		scale = int(config_section.get("Scale", fallback=1))
@@ -139,26 +149,26 @@ class Directory:
 		if min_size:
 			min_size = int(min_size)
 		threshold = int(config_section.get("Threshold", fallback=2))
-		
+
 		return cls(path, size, scale, context, type, max_size, min_size, threshold)
-	
+
 	@memoized_property
 	def icons(self):
 		absolute_dir_path = self.path.resolve()
 		# print(absolute_dir_path)
-		
+
 		icons = []
-		
+
 		for item in absolute_dir_path.iterdir():
 			if item.is_file():
 				if mime.from_file(str(item.resolve())) in {"image/svg+xml", "image/png"}:
 					icon = Icon(item.stem, item, self.size, self.type, self.max_size, self.min_size, self.theme)
 					icons.append(icon)
-		
+
 		return icons
-	
+
 	def __repr__(self):
 		return f"Directory({self.path})"
-	
+
 	def __str__(self):
 		return self.__repr__()
