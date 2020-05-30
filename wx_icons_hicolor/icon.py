@@ -21,10 +21,10 @@
 #
 
 # stdlib
-import pathlib
-from io import BytesIO
-import warnings
 import base64
+import pathlib
+import warnings
+from io import BytesIO
 
 # 3rd party
 import cairosvg

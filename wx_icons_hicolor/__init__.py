@@ -26,19 +26,16 @@
 # Hicolor
 # https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/hicolor-icon-theme/0.17-2/hicolor-icon-theme_0.17.orig.tar.xz
 
-# stdlib
-import sys
-
 # 3rd party
 import wx
 
 # this package
 from wx_icons_hicolor import Hicolor
 from wx_icons_hicolor.constants import mime, theme_index_path
+from wx_icons_hicolor.directory import Directory
+from wx_icons_hicolor.icon import Icon
 from wx_icons_hicolor.icon_theme import HicolorIconTheme
 from wx_icons_hicolor.test import test_icon_theme, test_random_icons
-from wx_icons_hicolor.icon import Icon
-from wx_icons_hicolor.directory import Directory
 
 __version__ = "0.1.1"
 
