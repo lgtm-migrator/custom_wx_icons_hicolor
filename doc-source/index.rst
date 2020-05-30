@@ -97,12 +97,13 @@ Installation
 .. end installation
 
 .. toctree::
-    :maxdepth: 3
-    :caption: Documentation
+	:maxdepth: 3
+	:caption: Documentation
 
-    docs
-    Source
-    Building
+	usage
+	docs
+	Source
+	Building
 
 
 .. start links
