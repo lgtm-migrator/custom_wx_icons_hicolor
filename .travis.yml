@@ -8,7 +8,8 @@ python:
 
 install:
 
-  - pip install pip lxml scour --upgrade
+  - pip install pip lxml scour dummy_wx --upgrade
+  - pip install -r requirements.txt
   - pip install tox tox-travis
 
 
@@ -28,6 +29,7 @@ jobs:
       python: "3.6"
       script:
         - python3 build_icons_from_src.py
+        - python3 make_importable.py
       deploy:
         on:
           tags: true
@@ -49,4 +51,4 @@ jobs:
         on:
           repo: domdfcoding/custom_wx_icons_hicolor
         provider: script
-        script: python .ci/copy_pypi_2_github.py || travis_terminate 1
+        script: python .ci/copy_pypi_2_github.py || return 1

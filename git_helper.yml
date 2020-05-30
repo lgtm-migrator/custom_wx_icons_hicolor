@@ -13,12 +13,9 @@ enable_conda: False
 
 exclude_files:
   - travis
+  - tox
 
 python_deploy_version: 3.6
-
-additional_ignore:
-  # __init__.py files generated during build process
-  - wx_icons_hicolor/Hicolor/**/__init__.py
 
 # Versions to run tests for
 python_versions:
