@@ -2,6 +2,14 @@
 Hicolor/Gnome Icon Theme for wxPython
 **************************************
 
+.. start short_desc
+
+**Hicolor icon theme for wxPython**
+
+.. end short_desc
+
+This package provides a wxPython wxArtProvider class with icons from the Hicolor/Gnome Icon Theme.
+
 .. start shields 
 
 .. list-table::
@@ -69,9 +77,25 @@ Hicolor/Gnome Icon Theme for wxPython
 
 .. end shields
 
-This package provides a wxPython wxArtProvider class with icons from the Hicolor/Gnome Icon Theme.
+Installation
+===============
 
-To use it in your application:
+.. start installation
+
+``wx_icons_hicolor`` can be installed from PyPI.
+
+To install with ``pip``:
+
+.. code-block:: bash
+
+	$ python -m pip install wx_icons_hicolor
+
+.. end installation
+
+Usage
+============
+
+To use ``wx_icons_hicolor`` in your application:
 
 .. code-block:: python
 
