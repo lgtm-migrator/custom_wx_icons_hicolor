@@ -141,7 +141,7 @@ class Directory:
 		size = int(config_section.get("Size"))
 		scale = int(config_section.get("Scale", fallback=1))
 		context = config_section.get("Context", fallback='')
-		type = config_section.get("Type", fallback='Threshold')
+		type_ = config_section.get("Type", fallback='Threshold')
 		max_size = config_section.get("MaxSize", fallback=None)
 		if max_size:
 			max_size = int(max_size)
@@ -150,7 +150,7 @@ class Directory:
 			min_size = int(min_size)
 		threshold = int(config_section.get("Threshold", fallback=2))
 
-		return cls(path, size, scale, context, type, max_size, min_size, threshold)
+		return cls(path, size, scale, context, type_, max_size, min_size, threshold)
 
 	@memoized_property
 	def icons(self):
