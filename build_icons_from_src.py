@@ -9,8 +9,9 @@ This takes around 15 minutes to run so be patient.
 #  Copyright (C) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  This program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU Lesser General Public License version 3
-#  as published by the Free Software Foundation.
+#  it under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation; either version 3 of the License, or
+#  (at your option) any later version.
 #
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -25,11 +26,17 @@ This takes around 15 minutes to run so be patient.
 
 
 # stdlib
-import os
 import sys
+import os
+import pathlib
+import urllib.request
+
+if not pathlib.Path("gnome_icon_builder.py").is_file():
+	urllib.request.urlretrieve(
+			"https://raw.githubusercontent.com/domdfcoding/custom_wx_icons/master/gnome_icon_builder.py",
+			"gnome_icon_builder.py")
 
 sys.path.append(".")
-sys.path.append("..")
 
 # this package
 from gnome_icon_builder import get_scalable_directories, main
