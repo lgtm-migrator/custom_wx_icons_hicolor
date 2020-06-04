@@ -27,8 +27,8 @@ import warnings
 from io import BytesIO
 
 # 3rd party
-import cairosvg
-import wx
+import cairosvg  # type: ignore
+import wx  # type: ignore
 
 # this package
 from .constants import mime

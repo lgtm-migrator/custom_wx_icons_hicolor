@@ -24,7 +24,7 @@
 import configparser
 import pathlib
 
-from memoized_property import memoized_property
+from memoized_property import memoized_property  # type: ignore
 
 # this package
 from .constants import mime

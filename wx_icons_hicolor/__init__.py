@@ -27,7 +27,7 @@
 # https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/hicolor-icon-theme/0.17-2/hicolor-icon-theme_0.17.orig.tar.xz
 
 # 3rd party
-import wx
+import wx  # type: ignore
 
 # this package
 from wx_icons_hicolor import Hicolor

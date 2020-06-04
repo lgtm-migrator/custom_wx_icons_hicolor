@@ -25,11 +25,8 @@ import configparser
 import copy
 import pathlib
 
-# 3rd party
-import importlib_resources
-
 # this package
-from wx_icons_hicolor import Hicolor
+from .constants import theme_index_path
 from .directory import Directory
 
 
@@ -276,8 +273,5 @@ class HicolorIconTheme(IconTheme):
 		"""
 		Create an instance of the Hicolor Icon Theme
 		"""
-
-		with importlib_resources.path(Hicolor, "index.theme") as theme_index_path:
-			theme_index_path = str(theme_index_path)
 
 		return cls.from_configparser(theme_index_path)
