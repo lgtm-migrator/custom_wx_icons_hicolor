@@ -24,6 +24,7 @@
 import configparser
 import pathlib
 
+# 3rd party
 from memoized_property import memoized_property  # type: ignore
 
 # this package
