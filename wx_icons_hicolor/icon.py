@@ -36,7 +36,16 @@ from .constants import mime
 
 class Icon:
 
-	def __init__(self, name, path, size, type='Threshold', max_size=None, min_size=None, theme=''):
+	def __init__(
+			self,
+			name: str,
+			path: pathlib.Path,
+			size: int,
+			type: str = 'Threshold',
+			max_size: int = None,
+			min_size: int = None,
+			theme: str = ''
+			):
 		"""
 
 		:param name: The name of the icon
@@ -157,7 +166,7 @@ class Icon:
 
 		base64.b64encode(self.as_png(size).getvalue()).decode("utf-8")
 
-	def as_bitmap(self, size=None):
+	def as_bitmap(self, size=None) -> wx.Bitmap:
 		"""
 		Returns the icon as a wxPython bitmap
 

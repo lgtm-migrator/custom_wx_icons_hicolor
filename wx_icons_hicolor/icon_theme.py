@@ -24,8 +24,10 @@
 import configparser
 import copy
 import pathlib
+from typing import Any, List, Optional, Sequence
 
 # this package
+from . import Icon
 from .constants import theme_index_path
 from .directory import Directory
 
@@ -34,13 +36,13 @@ class IconTheme:
 
 	def __init__(
 			self,
-			name,
-			comment,
-			directories,
-			inherits=None,
-			scaled_directories=None,
-			hidden=False,
-			example='',
+			name: str,
+			comment: str,
+			directories: Sequence[Directory],
+			inherits: List[str] = None,
+			scaled_directories: Sequence[Directory] = None,
+			hidden: bool = False,
+			example: str = '',
 			):
 		"""
 
@@ -74,7 +76,7 @@ class IconTheme:
 		self.comment = comment
 
 		if not isinstance(directories, list) or not isinstance(directories[0], Directory):
-			print(type(directories, type(directories[0])))
+			print(type(directories, type(directories[0])))  # type: ignore
 			raise TypeError("'directories' must be a list of Directory objects")
 		self.directories = copy.deepcopy(directories)
 		self.directories.sort(key=lambda directory: directory.size, reverse=True)
@@ -238,7 +240,7 @@ class IconTheme:
 			elif smallest_size_available and size < smallest_size_available:
 				return self.find_icon(icon_name, smallest_size_available, scale, False)
 
-	def find_icon(self, icon_name, size, scale, prefer_this_theme=True):
+	def find_icon(self, icon_name: str, size: int, scale: Any, prefer_this_theme: bool = True) -> Optional[Icon]:
 		"""
 		Searches for the icon with the given name and size.
 

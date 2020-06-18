@@ -36,15 +36,15 @@ class Directory:
 
 	def __init__(
 			self,
-			path,
-			size,
-			scale=1,
-			context='',
-			type='Threshold',
-			max_size=None,
-			min_size=None,
-			threshold=2,
-			theme='',
+			path: str,
+			size: int,
+			scale: int = 1,
+			context: str = '',
+			type: str = 'Threshold',
+			max_size: int = None,
+			min_size: int = None,
+			threshold: int = 2,
+			theme: str = '',
 			):
 		"""
 
