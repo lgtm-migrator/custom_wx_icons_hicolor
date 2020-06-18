@@ -42,7 +42,7 @@ from wx_icons_hicolor.test import test_icon_theme, test_random_icons
 
 __author__ = "Dominic Davis-Foster"
 __copyright__ = "2014-2020 Dominic Davis-Foster"
-__version__: str = "0.1.1"
+__version__: str = "0.1.2"
 
 __license__ = "LGPLv3+"
 __email__ = "dominic@davis-foster.co.uk"
