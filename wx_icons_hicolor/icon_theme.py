@@ -24,22 +24,24 @@
 import configparser
 import copy
 import pathlib
-from typing import Any, List, Optional, Sequence
+from typing import Any, Dict, List, Optional, Sequence
 
 # this package
 from . import Icon
-from .constants import theme_index_path
+from .constants import PathLike, theme_index_path
 from .directory import Directory
 
 
 class IconTheme:
+	inherits: List[str]
+	scaled_directories: List[Directory]
 
 	def __init__(
 			self,
 			name: str,
 			comment: str,
 			directories: Sequence[Directory],
-			inherits: List[str] = None,
+			inherits: Sequence[str] = None,
 			scaled_directories: Sequence[Directory] = None,
 			hidden: bool = False,
 			example: str = '',
@@ -72,26 +74,27 @@ class IconTheme:
 		:type example: str, optional
 		"""
 
-		self.name = name
-		self.comment = comment
+		self.name: str = str(name)
+		self.comment: str = str(comment)
 
 		if not isinstance(directories, list) or not isinstance(directories[0], Directory):
 			print(type(directories, type(directories[0])))  # type: ignore
 			raise TypeError("'directories' must be a list of Directory objects")
-		self.directories = copy.deepcopy(directories)
-		self.directories.sort(key=lambda directory: directory.size, reverse=True)
+		self.directories: Sequence[Directory] = sorted(
+				copy.deepcopy(directories), key=lambda directory: directory.size, reverse=True
+				)
 
 		if inherits:
-			if not isinstance(inherits, list) or not isinstance(inherits[0], str):
+			if not isinstance(inherits, Sequence) or not isinstance(inherits[0], str):
 				raise TypeError("'inherits' must be a list of strings")
-			self.inherits = inherits
+			self.inherits = list(inherits)
 		else:
 			self.inherits = []
 
 		if scaled_directories:
-			if not isinstance(scaled_directories, list) or not isinstance(scaled_directories[0], Directory):
+			if not isinstance(scaled_directories, Sequence) or not isinstance(scaled_directories[0], Directory):
 				raise TypeError("'scaled_directories' must be a list of Directory objects")
-			self.scaled_directories = scaled_directories
+			self.scaled_directories = list(scaled_directories)
 		else:
 			self.scaled_directories = []
 
@@ -99,15 +102,15 @@ class IconTheme:
 		self.example = example
 
 	def __iter__(self):
-		for key, value in self.__dict__().items():
-			yield key, value
+		yield from self.__dict__.items()
 
-	def __getstate__(self):
-		return self.__dict__()
+	def __getstate__(self) -> Dict[str, Any]:
+		return self.__dict__
 
 	def __setstate__(self, state):
 		self.__init__(**state)
 
+	@property
 	def __dict__(self):
 		return dict(
 				name=self.name,
@@ -120,28 +123,32 @@ class IconTheme:
 				)
 
 	def __copy__(self):
-		return self.__class__(**self.__dict__())
+		return self.__class__(**self.__dict__)
 
 	def __deepcopy__(self, memodict={}):
-		class_dict = self.__dict__()
+		class_dict = self.__dict__
 
 		class_dict["directories"] = [copy.copy(directory) for directory in class_dict["directories"]]
 		class_dict["scaled_directories"] = [copy.copy(directory) for directory in class_dict["scaled_directories"]]
 
-		return self.__class__(**self.__dict__())
+		return self.__class__(**self.__dict__)
 
-	def __repr__(self):
-		return f"{self.name} Icon Theme object at {id(self)})"
+	def __repr__(self) -> str:
+		return f"{self.name} Icon Theme object at {hex(id(self))})"
 
-	def __str__(self):
+	def __str__(self) -> str:
 		return f"{self.name} Icon Theme"
 
 	@classmethod
-	def from_configparser(cls, theme_index_path):
+	def from_configparser(cls, theme_index_path: PathLike):
+
+		if not isinstance(theme_index_path, pathlib.Path):
+			theme_index_path = pathlib.Path(theme_index_path)
+
 		parser = configparser.ConfigParser()
 		parser.read(theme_index_path)
 
-		theme_content_root = pathlib.Path(theme_index_path).parent
+		theme_content_root = theme_index_path.parent
 
 		name = parser.get("Icon Theme", "Name")
 		comment = parser.get("Icon Theme", "Comment")
@@ -182,22 +189,29 @@ class IconTheme:
 
 		return cls(name, comment, directories_new, inherits, scaled_directories_new, hidden, example)
 
-	def _do_find_icon(self, icon_name, size, scale, prefer_this_theme=True):
+	def _do_find_icon(
+			self,
+			icon_name: str,
+			size: int,
+			scale: Any,
+			prefer_this_theme: bool = True,
+			) -> Optional[Icon]:
 		"""
+		Searches for the icon with the given name and size.
 
-		:param icon_name:
-		:type icon_name:
-		:param size:
-		:type size:
-		:param scale:
-		:type scale:
+		:param icon_name: The name of the icon to find.
+			Any `FreeDesktop Icon Theme Specification <https://specifications.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html>`_
+			name can be used.
+		:type icon_name: str
+		:param size: The desired size of the icon
+		:type size: int
+		:param scale: TODO: Currently does nothing
 		:param prefer_this_theme: Return an icon from this theme even if it has to be resized,
 			rather than a correctly sized icon from the parent theme.
-		:type prefer_this_theme:
-		:return:
-		:rtype:
+		:type prefer_this_theme: bool
+
+		:return: The icon if it was found, or None
 		"""
-		# TODO: scale
 
 		smallest_size_available = 0
 		largest_size_available = 0
@@ -240,6 +254,8 @@ class IconTheme:
 			elif smallest_size_available and size < smallest_size_available:
 				return self.find_icon(icon_name, smallest_size_available, scale, False)
 
+		return None
+
 	def find_icon(self, icon_name: str, size: int, scale: Any, prefer_this_theme: bool = True) -> Optional[Icon]:
 		"""
 		Searches for the icon with the given name and size.
@@ -251,7 +267,6 @@ class IconTheme:
 		:param size: The desired size of the icon
 		:type size: int
 		:param scale: TODO: Currently does nothing
-		:type scale: any
 		:param prefer_this_theme: Return an icon from this theme even if it has to be resized,
 			rather than a correctly sized icon from the parent theme.
 		:type prefer_this_theme:

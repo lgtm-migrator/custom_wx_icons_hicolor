@@ -21,16 +21,25 @@
 #
 
 # stdlib
+import os
 import pathlib
+from typing import Union
 
 # 3rd party
 import importlib_resources  # type: ignore
 import magic  # type: ignore
+from typing_extensions import Literal
 
 # this package
 from wx_icons_hicolor import Hicolor
+
+__all__ = ["mime", "theme_index_path", "PathLike", "IconTypes"]
 
 mime = magic.Magic(mime=True)
 
 with importlib_resources.path(Hicolor, "index.theme") as theme_index_path:
 	theme_index_path = pathlib.Path(theme_index_path)
+
+PathLike = Union[str, pathlib.Path, os.PathLike]
+IconTypes = Literal["Fixed", "Scalable", "Threshold"]
+

@@ -362,8 +362,12 @@ freedesktop_naming_spec_list = [
 
 
 def test_icon_theme(theme, show_success=True, show_warning=True):
+
+	# 3rd party
 	import colorama  # type: ignore
 	colorama.init()
+
+	# 3rd party
 	from colorama import Fore  # type: ignore
 
 	successes = 0

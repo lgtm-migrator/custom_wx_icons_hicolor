@@ -22,6 +22,7 @@ __all__ = [
 		"py_modules",
 		"entry_points",
 		"__license__",
+		"__author__",
 		"short_desc",
 		"author",
 		"author_email",
@@ -69,9 +70,9 @@ project_urls = {
 repo_root = pathlib.Path(__file__).parent
 
 # Get info from files; set: long_description
-long_description = (repo_root / "README.rst").read_text().replace("0.1.1", __version__) + '\n'
+long_description = (repo_root / "README.rst").read_text(encoding="utf-8").replace("0.1.1", __version__) + '\n'
 
-install_requires = (repo_root / "requirements.txt").read_text().split('\n')
+install_requires = (repo_root / "requirements.txt").read_text(encoding="utf-8").split('\n')
 extras_require = {'all': []}
 
 classifiers = [
@@ -89,6 +90,8 @@ classifiers = [
 		'Programming Language :: Python',
 		'Programming Language :: Python :: 3 :: Only',
 		'License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)',
+		'Typing :: Typed',
+		'Operating System :: OS Independent',
 
 		]
 

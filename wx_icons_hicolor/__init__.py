@@ -26,6 +26,9 @@
 # Hicolor
 # https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/hicolor-icon-theme/0.17-2/hicolor-icon-theme_0.17.orig.tar.xz
 
+# stdlib
+from typing import Any, Tuple, Union
+
 # 3rd party
 import wx  # type: ignore
 
@@ -37,10 +40,28 @@ from wx_icons_hicolor.icon import Icon
 from wx_icons_hicolor.icon_theme import HicolorIconTheme
 from wx_icons_hicolor.test import test_icon_theme, test_random_icons
 
-__version__ = "0.1.1"
+__author__ = "Dominic Davis-Foster"
+__copyright__ = "2014-2020 Dominic Davis-Foster"
+__version__: str = "0.1.1"
+
+__license__ = "LGPLv3+"
+__email__ = "dominic@davis-foster.co.uk"
+
+__all__ = [
+		"version",
+		"wxHicolorIconTheme",
+		"Hicolor",
+		"mime",
+		"theme_index_path",
+		"Directory",
+		"Icon",
+		"HicolorIconTheme",
+		"test_icon_theme",
+		"test_random_icons",
+		]
 
 
-def version():
+def version() -> str:
 	return f"""wx_icons_hicolor
 Version {__version__}
 Gnome Icon Theme Version 3.12.0
@@ -51,21 +72,22 @@ class wxHicolorIconTheme(wx.ArtProvider):
 	_hicolor_theme = HicolorIconTheme.create()
 
 	@staticmethod
-	def HasNativeProvider():
+	def HasNativeProvider() -> bool:
 		return False
 
 	@staticmethod
-	def icon2bitmap(icon, size):
+	def icon2bitmap(icon: Icon, size) -> wx.Bitmap:
 		if icon.scalable:
 			return icon.as_bitmap(size)
 		else:
 			return icon.as_bitmap()
 
-	def CreateBitmap(self, id, client, size):
-		icon = self._hicolor_theme.find_icon(id, size.x, None)
+	def CreateBitmap(self, id: Any, client: Any, size: Union[Tuple[int], wx.Size]) -> wx.Bitmap:
+
+		icon = self._hicolor_theme.find_icon(id, size[0], None)
 		if icon:
 			print(icon, icon.path)
-			return self.icon2bitmap(icon, size.x)
+			return self.icon2bitmap(icon, size[0])
 		else:
 			# return self._humanity_theme.find_icon("image-missing", size.x, None).as_bitmap()
 			print("Icon not found in Hicolor theme")

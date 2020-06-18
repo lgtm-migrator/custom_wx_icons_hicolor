@@ -23,36 +23,38 @@
 # stdlib
 import configparser
 import pathlib
+from typing import Any, Dict, List, Optional
 
 # 3rd party
 from memoized_property import memoized_property  # type: ignore
 
 # this package
-from .constants import mime
+from .constants import PathLike, mime, IconTypes
 from .icon import Icon
 
 
 class Directory:
+	max_size: int
+	min_size: int
 
 	def __init__(
 			self,
-			path: str,
+			path: PathLike,
 			size: int,
 			scale: int = 1,
 			context: str = '',
-			type: str = 'Threshold',
-			max_size: int = None,
-			min_size: int = None,
+			type: IconTypes = 'Threshold',
+			max_size: Optional[int] = None,
+			min_size: Optional[int] = None,
 			threshold: int = 2,
 			theme: str = '',
 			):
 		"""
 
 		:param path: The absolute path to the directory
-		:type path: str
 		:param size: Nominal (unscaled) size of the icons in this directory.
 		:type size: int
-		:param scale: Target scale of of the icons in this directory. Defaults to the value 1 if not present.
+		:param scale: Target scale of the icons in this directory. Defaults to the value 1 if not present.
 			Any directory with a scale other than 1 should be listed in the ScaledDirectories list rather
 			than Directories for backwards compatibility.
 		:type scale: int, optional
@@ -73,18 +75,18 @@ class Directory:
 		:type theme: str
 		"""
 
-		self.scale = scale
-		self.context = context
-		self.threshold = threshold
-		self.theme = theme
+		self.scale: int = int(scale)
+		self.context: str = str(context)
+		self.threshold: str = str(threshold)
+		self.theme: str = str(theme)
 
 		if not isinstance(path, pathlib.Path):
-			raise TypeError("'path' must be a pathlib.Path object.")
-		self.path = path
+			path = pathlib.Path(path)
+		self.path: pathlib.Path = path.resolve()
 
 		if not isinstance(size, int):
 			raise TypeError("'size' must be a integer.")
-		self.size = size
+		self.size: int = int(size)
 
 		if type not in {"Fixed", "Scalable", "Threshold"}:
 			raise ValueError("'type' must be one of 'Fixed', 'Scalable' or 'Threshold'.")
@@ -105,15 +107,15 @@ class Directory:
 			self.min_size = size
 
 	def __iter__(self):
-		for key, value in self.__dict__().items():
-			yield key, value
+		yield from self.__dict__.items()
 
-	def __getstate__(self):
-		return self.__dict__()
+	def __getstate__(self) -> Dict[str, Any]:
+		return self.__dict__
 
 	def __setstate__(self, state):
 		self.__init__(**state)
 
+	@property
 	def __dict__(self):
 		return dict(
 				path=self.path,
@@ -128,33 +130,51 @@ class Directory:
 				)
 
 	def __copy__(self):
-		return self.__class__(**self.__dict__())
+		return self.__class__(**self.__dict__)
 
 	def __deepcopy__(self, memodict={}):
 		return self.__copy__()
 
 	@classmethod
-	def from_configparser(cls, config_section, theme_content_root):
+	def from_configparser(cls, config_section: configparser.SectionProxy, theme_content_root: pathlib.Path):
 		if not isinstance(config_section, configparser.SectionProxy):
 			raise TypeError("'config_section' must be a 'configparser.SectionProxy' object")
 
 		path = theme_content_root / pathlib.Path(config_section.name)
 		size = int(config_section.get("Size"))
-		scale = int(config_section.get("Scale", fallback=1))
+		scale = int(config_section.get("Scale", fallback="1"))
 		context = config_section.get("Context", fallback='')
 		type_ = config_section.get("Type", fallback='Threshold')
-		max_size = config_section.get("MaxSize", fallback=None)
-		if max_size:
-			max_size = int(max_size)
-		min_size = config_section.get("MinSize", fallback=None)
-		if min_size:
-			min_size = int(min_size)
-		threshold = int(config_section.get("Threshold", fallback=2))
 
-		return cls(path, size, scale, context, type_, max_size, min_size, threshold)
+		max_size = config_section.get("MaxSize", fallback=None)
+		max_size_: Optional[int]
+		if max_size:
+			max_size_ = int(max_size)
+		else:
+			max_size_ = None
+
+		min_size = config_section.get("MinSize", fallback=None)
+		min_size_: Optional[int]
+		if min_size:
+			min_size_ = int(min_size)
+		else:
+			min_size_ = None
+
+		threshold = int(config_section.get("Threshold", fallback="2"))
+
+		return cls(
+				path,
+				size,
+				scale,
+				context,
+				type_,  # type: ignore
+				max_size_,
+				min_size_,
+				threshold,
+				)
 
 	@memoized_property
-	def icons(self):
+	def icons(self) -> List[Icon]:
 		absolute_dir_path = self.path.resolve()
 		# print(absolute_dir_path)
 
@@ -168,8 +188,8 @@ class Directory:
 
 		return icons
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f"Directory({self.path})"
 
-	def __str__(self):
+	def __str__(self) -> str:
 		return self.__repr__()

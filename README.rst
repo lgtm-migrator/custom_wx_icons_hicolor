@@ -17,35 +17,49 @@ This package provides a wxPython wxArtProvider class with icons from the Hicolor
 	:widths: 10 90
 
 	* - Docs
-	  - |docs|
+	  - |docs| |docs_check|
 	* - Tests
-	  - |travis| |requires| |codefactor|
+	  - |travis| |actions_windows| |actions_macos| |codefactor|
 	* - PyPI
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
+	* - Activity
+	  - |commits-latest| |commits-since| |maintained|
 	* - Other
-	  - |license| |language| |commits-since| |commits-latest| |maintained| 
+	  - |license| |language| |requires|
 
-.. |docs| image:: https://readthedocs.org/projects/custom_wx_icons_hicolor/badge/?version=latest
+.. |docs| image:: https://img.shields.io/readthedocs/custom_wx_icons_hicolor/latest?logo=read-the-docs
 	:target: https://custom_wx_icons_hicolor.readthedocs.io/en/latest/?badge=latest
 	:alt: Documentation Status
+	
+.. |docs_check| image:: https://github.com/domdfcoding/custom_wx_icons_hicolor/workflows/Docs%20Check/badge.svg
+	:target: https://github.com/domdfcoding/custom_wx_icons_hicolor/actions?query=workflow%3A%22Docs+Check%22
+	:alt: Docs Check Status
 
 .. |travis| image:: https://img.shields.io/travis/com/domdfcoding/custom_wx_icons_hicolor/master?logo=travis
 	:target: https://travis-ci.com/domdfcoding/custom_wx_icons_hicolor
 	:alt: Travis Build Status
 
+.. |actions_windows| image:: https://github.com/domdfcoding/custom_wx_icons_hicolor/workflows/Windows%20Tests/badge.svg
+	:target: https://github.com/domdfcoding/custom_wx_icons_hicolor/actions?query=workflow%3A%22Windows+Tests%22
+	:alt: Windows Tests Status
+
+.. |actions_macos| image:: https://github.com/domdfcoding/custom_wx_icons_hicolor/workflows/macOS%20Tests/badge.svg
+	:target: https://github.com/domdfcoding/custom_wx_icons_hicolor/actions?query=workflow%3A%22macOS+Tests%22
+	:alt: macOS Tests Status
+
 .. |requires| image:: https://requires.io/github/domdfcoding/custom_wx_icons_hicolor/requirements.svg?branch=master
 	:target: https://requires.io/github/domdfcoding/custom_wx_icons_hicolor/requirements/?branch=master
 	:alt: Requirements Status
 
-.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/custom_wx_icons_hicolor
+.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/custom_wx_icons_hicolor?logo=codefactor
 	:target: https://www.codefactor.io/repository/github/domdfcoding/custom_wx_icons_hicolor
 	:alt: CodeFactor Grade
 
-.. |pypi-version| image:: https://img.shields.io/pypi/v/wx_icons_hicolor.svg
+.. |pypi-version| image:: https://img.shields.io/pypi/v/wx_icons_hicolor
 	:target: https://pypi.org/project/wx_icons_hicolor/
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/wx_icons_hicolor.svg
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/wx_icons_hicolor
 	:target: https://pypi.org/project/wx_icons_hicolor/
 	:alt: PyPI - Supported Python Versions
 

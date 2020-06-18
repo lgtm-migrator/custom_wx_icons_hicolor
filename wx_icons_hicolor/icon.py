@@ -22,28 +22,34 @@
 
 # stdlib
 import base64
+import os
 import pathlib
 import warnings
 from io import BytesIO
+from typing import Any, Dict, Optional, Union
 
 # 3rd party
 import cairosvg  # type: ignore
 import wx  # type: ignore
 
 # this package
-from .constants import mime
+from .constants import PathLike, mime, IconTypes
+
+__all__ = ["Icon"]
 
 
 class Icon:
+	max_size: int
+	min_size: int
 
 	def __init__(
 			self,
 			name: str,
-			path: pathlib.Path,
+			path: PathLike,
 			size: int,
-			type: str = 'Threshold',
-			max_size: int = None,
-			min_size: int = None,
+			type: IconTypes = 'Threshold',
+			max_size: Optional[int] = None,
+			min_size: Optional[int] = None,
 			theme: str = ''
 			):
 		"""
@@ -51,64 +57,65 @@ class Icon:
 		:param name: The name of the icon
 		:type name: str
 		:param path: The path to the icon
-		:type path: pathlib.Path
 		:param size: Nominal (unscaled) size of the icon.
 		:type size: int
 		:param type: The type of icon sizes for the icon.
-			Valid types are Fixed, Scalable and Threshold.
+			Valid types are ``"Fixed"``, ``"Scalable"`` and ``"Threshold"``.
 			The type decides what other keys in the section are used.
-			If not specified, the default is Threshold.
+			If not specified, the default is ``"Threshold"``.
 		:type type: str
-		:param max_size: Specifies the maximum (unscaled) size that the icon can be scaled to. Defaults to the value of Size if not present.
+		:param max_size: Specifies the maximum (unscaled) size that the icon can be scaled to.
+			Defaults to the value of ``Size`` if not present.
 		:type max_size: int
-		:param min_size: Specifies the minimum (unscaled) size that the icon can be scaled to. Defaults to the value of Size if not present.
+		:param min_size: Specifies the minimum (unscaled) size that the icon can be scaled to.
+			Defaults to the value of ``Size`` if not present.
 		:type min_size: int
 		:param theme: The name of the theme this icon came from
 		:type theme: str
 		"""
 
 		if not isinstance(path, pathlib.Path):
-			raise TypeError("'path' must be a pathlib.Path object.")
-		self.path = path.resolve()
+			path = pathlib.Path(path)
+		self.path: pathlib.Path = path.resolve()
 
 		if self.mime_type not in {"image/svg+xml", "image/png"}:
 			raise TypeError("The specified file is not a valid icon")
 
-		self.name = name
-		self.theme = theme
+		self.name: str = str(name)
+		self.theme: str = str(theme)
 
 		if not isinstance(size, int):
 			raise TypeError("'size' must be a integer.")
-		self.size = size
+		self.size: int = int(size)
 
 		if type not in {"Fixed", "Scalable", "Threshold"}:
 			raise ValueError("'type' must be one of 'Fixed', 'Scalable' or 'Threshold'.")
-		self.type = type
+		self.type = str(type)
 
 		if max_size:
 			if not isinstance(max_size, int):
 				raise TypeError("'max_size' must be a integer.")
-			self.max_size = max_size
+			self.max_size = int(max_size)
 		else:
-			self.max_size = size
+			self.max_size = int(size)
 
 		if min_size:
 			if not isinstance(min_size, int):
 				raise TypeError("'min_size' must be a integer.")
-			self.min_size = min_size
+			self.min_size = int(min_size)
 		else:
-			self.min_size = size
+			self.min_size = int(size)
 
 	def __iter__(self):
-		for key, value in self.__dict__().items():
-			yield key, value
+		yield from self.__dict__.items()
 
-	def __getstate__(self):
-		return self.__dict__()
+	def __getstate__(self) -> Dict[str, Any]:
+		return self.__dict__
 
 	def __setstate__(self, state):
 		self.__init__(**state)
 
+	@property
 	def __dict__(self):
 		return dict(
 				name=self.name,
@@ -121,34 +128,33 @@ class Icon:
 				)
 
 	def __copy__(self):
-		return self.__class__(**self.__dict__())
+		return self.__class__(**self.__dict__)
 
 	def __deepcopy__(self, memodict={}):
 		return self.__copy__()
 
 	@property
-	def mime_type(self):
-		return mime.from_file(str(self.path))
+	def mime_type(self) -> str:
+		return str(mime.from_file(str(self.path)))
 
 	@property
-	def scalable(self):
+	def scalable(self) -> bool:
 		if self.type == "Fixed" and self.mime_type == "image/png":
 			return False
 		return True
 
-	def as_png(self, size=None):
+	def as_png(self, size: Optional[int] = None) -> BytesIO:
 		"""
 		Returns the icon as a BytesIO object containing PNG image data
 
-		:return:
-		:rtype:
+		:return: :class:`io.BytesIO` object representing the PNG image.
 		"""
 
 		if not size:
 			size = self.size
 
 		if self.mime_type == "image/png":
-			with open(self.path, "rb") as fin:
+			with self.path.open("rb") as fin:
 				data = BytesIO(fin.read())
 			return data
 
@@ -156,17 +162,20 @@ class Icon:
 			svg_img = cairosvg.svg2png(url=str(self.path), output_width=size, output_height=size)
 			return BytesIO(svg_img)
 
-	def as_base64_png(self, size):
+		else:
+			raise ValueError(f"Unknown mime type '{self.mime_type}'")
+
+	def as_base64_png(self, size: Optional[int] = None) -> str:
 		"""
 		Returns the icon as a base64-encoded BytesIO object containing PNG image data
 
-		:return:
-		:rtype:
+		:return: Base64-encoded string representing the PNG image
+		:rtype: str
 		"""
 
-		base64.b64encode(self.as_png(size).getvalue()).decode("utf-8")
+		return str(base64.b64encode(self.as_png(size).getvalue()).decode("utf-8"))
 
-	def as_bitmap(self, size=None) -> wx.Bitmap:
+	def as_bitmap(self, size: Optional[int] = None) -> wx.Bitmap:
 		"""
 		Returns the icon as a wxPython bitmap
 
@@ -183,23 +192,25 @@ class Icon:
 		if size > self.max_size:
 			print(size, self.size, self.max_size)
 			warnings.warn(f"This icon should not be scaled larger than {self.max_size} px")
+
 		elif size < self.min_size:
 			warnings.warn(f"This icon should not be scaled smaller than {self.min_size} px")
 
 		if self.mime_type == "image/png":
 			# TODO Scaling
 			return wx.Bitmap(wx.Image(str(self.path), wx.BITMAP_TYPE_PNG))
+
 		elif self.mime_type == "image/svg+xml":
 			svg_img = cairosvg.svg2png(url=str(self.path), output_width=size, output_height=size)
 			return wx.Bitmap(wx.Image(BytesIO(svg_img), wx.BITMAP_TYPE_PNG))
 
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return f"Icon({self.name})"
 
-	def __str__(self):
+	def __str__(self) -> str:
 		return self.__repr__()
 
-	def __eq__(self, other):
+	def __eq__(self, other) -> bool:
 		if isinstance(other, str):
 			return self.name == other
 
