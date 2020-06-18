@@ -76,7 +76,6 @@ install_requires = (repo_root / "requirements.txt").read_text(encoding="utf-8").
 extras_require = {'all': []}
 
 classifiers = [
-		'Operating System :: POSIX :: Linux',
 		'Topic :: Desktop Environment :: Gnome',
 		'Environment :: X11 Applications :: GTK',
 		'Intended Audience :: Developers',
