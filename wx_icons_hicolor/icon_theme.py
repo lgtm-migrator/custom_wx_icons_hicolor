@@ -152,11 +152,11 @@ class IconTheme:
 
 		name = parser.get("Icon Theme", "Name")
 		comment = parser.get("Icon Theme", "Comment")
-		inherits = parser.get("Icon Theme", "Inherits", fallback='').split(",")
+		inherits = parser.get("Icon Theme", "Inherits", fallback='').split(',')
 
-		directories = parser.get("Icon Theme", "Directories").split(",")
-		while "" in directories:
-			directories.remove("")
+		directories = parser.get("Icon Theme", "Directories").split(',')
+		while '' in directories:
+			directories.remove('')
 
 		directories_new = []
 
@@ -165,9 +165,9 @@ class IconTheme:
 			icon_dir.theme = name
 			directories_new.append(icon_dir)
 
-		scaled_directories = parser.get("Icon Theme", "ScaledDirectories", fallback='').split(",")
-		while "" in scaled_directories:
-			scaled_directories.remove("")
+		scaled_directories = parser.get("Icon Theme", "ScaledDirectories", fallback='').split(',')
+		while '' in scaled_directories:
+			scaled_directories.remove('')
 
 		scaled_directories_new = []
 
@@ -256,7 +256,13 @@ class IconTheme:
 
 		return None
 
-	def find_icon(self, icon_name: str, size: int, scale: Any, prefer_this_theme: bool = True) -> Optional[Icon]:
+	def find_icon(
+			self,
+			icon_name: str,
+			size: int,
+			scale: Any,
+			prefer_this_theme: bool = True,
+			) -> Optional[Icon]:
 		"""
 		Searches for the icon with the given name and size.
 

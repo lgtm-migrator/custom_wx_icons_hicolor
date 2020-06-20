@@ -33,7 +33,7 @@ import cairosvg  # type: ignore
 import wx  # type: ignore
 
 # this package
-from .constants import PathLike, mime, IconTypes
+from .constants import IconTypes, PathLike, mime
 
 __all__ = ["Icon"]
 
@@ -47,7 +47,7 @@ class Icon:
 			name: str,
 			path: PathLike,
 			size: int,
-			type: IconTypes = 'Threshold',
+			type: IconTypes = "Threshold",
 			max_size: Optional[int] = None,
 			min_size: Optional[int] = None,
 			theme: str = ''

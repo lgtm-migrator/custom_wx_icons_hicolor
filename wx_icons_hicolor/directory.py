@@ -29,7 +29,7 @@ from typing import Any, Dict, List, Optional
 from memoized_property import memoized_property  # type: ignore
 
 # this package
-from .constants import PathLike, mime, IconTypes
+from .constants import IconTypes, PathLike, mime
 from .icon import Icon
 
 
@@ -43,7 +43,7 @@ class Directory:
 			size: int,
 			scale: int = 1,
 			context: str = '',
-			type: IconTypes = 'Threshold',
+			type: IconTypes = "Threshold",
 			max_size: Optional[int] = None,
 			min_size: Optional[int] = None,
 			threshold: int = 2,
@@ -142,9 +142,9 @@ class Directory:
 
 		path = theme_content_root / pathlib.Path(config_section.name)
 		size = int(config_section.get("Size"))
-		scale = int(config_section.get("Scale", fallback="1"))
+		scale = int(config_section.get("Scale", fallback='1'))
 		context = config_section.get("Context", fallback='')
-		type_ = config_section.get("Type", fallback='Threshold')
+		type_ = config_section.get("Type", fallback="Threshold")
 
 		max_size = config_section.get("MaxSize", fallback=None)
 		max_size_: Optional[int]
@@ -160,7 +160,7 @@ class Directory:
 		else:
 			min_size_ = None
 
-		threshold = int(config_section.get("Threshold", fallback="2"))
+		threshold = int(config_section.get("Threshold", fallback='2'))
 
 		return cls(
 				path,

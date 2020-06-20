@@ -37,7 +37,7 @@ from wx_icons_hicolor import Hicolor
 from wx_icons_hicolor.constants import mime, theme_index_path
 from wx_icons_hicolor.directory import Directory
 from wx_icons_hicolor.icon import Icon
-from wx_icons_hicolor.icon_theme import HicolorIconTheme
+from wx_icons_hicolor.icon_theme import HicolorIconTheme, IconTheme
 from wx_icons_hicolor.test import test_icon_theme, test_random_icons
 
 __author__ = "Dominic Davis-Foster"
@@ -69,14 +69,14 @@ Gnome Icon Theme Version 3.12.0
 
 
 class wxHicolorIconTheme(wx.ArtProvider):
-	_hicolor_theme = HicolorIconTheme.create()
+	_hicolor_theme: IconTheme = HicolorIconTheme.create()
 
 	@staticmethod
 	def HasNativeProvider() -> bool:
 		return False
 
 	@staticmethod
-	def icon2bitmap(icon: Icon, size) -> wx.Bitmap:
+	def icon2bitmap(icon: Icon, size: int) -> wx.Bitmap:
 		if icon.scalable:
 			return icon.as_bitmap(size)
 		else:
@@ -85,9 +85,11 @@ class wxHicolorIconTheme(wx.ArtProvider):
 	def CreateBitmap(self, id: Any, client: Any, size: Union[Tuple[int], wx.Size]) -> wx.Bitmap:
 
 		icon = self._hicolor_theme.find_icon(id, size[0], None)
+
 		if icon:
 			print(icon, icon.path)
 			return self.icon2bitmap(icon, size[0])
+
 		else:
 			# return self._humanity_theme.find_icon("image-missing", size.x, None).as_bitmap()
 			print("Icon not found in Hicolor theme")
@@ -100,7 +102,7 @@ class wxHicolorIconTheme(wx.ArtProvider):
 	# 	pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 	# theme = HicolorIconTheme.from_configparser(theme_index_path)
 	theme = HicolorIconTheme.create()
 

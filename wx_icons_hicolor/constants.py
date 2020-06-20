@@ -42,4 +42,3 @@ with importlib_resources.path(Hicolor, "index.theme") as theme_index_path:
 
 PathLike = Union[str, pathlib.Path, os.PathLike]
 IconTypes = Literal["Fixed", "Scalable", "Threshold"]
-
