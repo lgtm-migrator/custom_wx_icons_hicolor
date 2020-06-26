@@ -46,3 +46,7 @@ classifiers:
 
 additional_ignore:
   - gnome_icon_builder.py
+
+
+imgbot_ignore:
+  - "wx_icons_hicolor/*"
