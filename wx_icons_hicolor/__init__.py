@@ -40,12 +40,12 @@ from wx_icons_hicolor.icon import Icon
 from wx_icons_hicolor.icon_theme import HicolorIconTheme, IconTheme
 from wx_icons_hicolor.test import test_icon_theme, test_random_icons
 
-__author__ = "Dominic Davis-Foster"
-__copyright__ = "2014-2020 Dominic Davis-Foster"
+__author__: str = "Dominic Davis-Foster"
+__copyright__: str = "2020 Dominic Davis-Foster"
 __version__: str = "0.1.3"
 
-__license__ = "LGPLv3+"
-__email__ = "dominic@davis-foster.co.uk"
+__license__: str = "LGPLv3+"
+__email__: str = "dominic@davis-foster.co.uk"
 
 __all__ = [
 		"version",
@@ -58,6 +58,7 @@ __all__ = [
 		"HicolorIconTheme",
 		"test_icon_theme",
 		"test_random_icons",
+		"IconTheme",
 		]
 
 
