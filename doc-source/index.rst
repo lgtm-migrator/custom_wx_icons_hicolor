@@ -7,7 +7,7 @@ wx_icons_hicolor
 **Hicolor icon theme for wxPython**
 
 .. end short_desc
-.. start shields 
+.. start shields
 
 .. list-table::
 	:stub-columns: 1
@@ -27,7 +27,7 @@ wx_icons_hicolor
 .. |docs| image:: https://img.shields.io/readthedocs/custom_wx_icons_hicolor/latest?logo=read-the-docs
 	:target: https://custom_wx_icons_hicolor.readthedocs.io/en/latest/?badge=latest
 	:alt: Documentation Status
-	
+
 .. |docs_check| image:: https://github.com/domdfcoding/custom_wx_icons_hicolor/workflows/Docs%20Check/badge.svg
 	:target: https://github.com/domdfcoding/custom_wx_icons_hicolor/actions?query=workflow%3A%22Docs+Check%22
 	:alt: Docs Check Status
@@ -56,7 +56,7 @@ wx_icons_hicolor
 	:target: https://pypi.org/project/wx_icons_hicolor/
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/wx_icons_hicolor
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/wx_icons_hicolor?logo=python&logoColor=white
 	:target: https://pypi.org/project/wx_icons_hicolor/
 	:alt: PyPI - Supported Python Versions
 
@@ -69,8 +69,8 @@ wx_icons_hicolor
 	:alt: PyPI - Wheel
 
 .. |license| image:: https://img.shields.io/github/license/domdfcoding/custom_wx_icons_hicolor
-	:alt: License
 	:target: https://github.com/domdfcoding/custom_wx_icons_hicolor/blob/master/LICENSE
+	:alt: License
 
 .. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/custom_wx_icons_hicolor
 	:alt: GitHub top language
@@ -99,14 +99,14 @@ Installation
 
 		.. prompt:: bash
 
-			pip install wx_icons_hicolor
+			python3 -m pip install wx_icons_hicolor --user
 
 
 	.. tab:: from GitHub
 
 		.. prompt:: bash
 
-			pip install git+https://github.com/domdfcoding/custom_wx_icons_hicolor@master
+			python3 -m pip install git+https://github.com/domdfcoding/custom_wx_icons_hicolor@master --user
 
 .. end installation
 

@@ -10,7 +10,7 @@ wx_icons_hicolor
 
 This package provides a wxPython wxArtProvider class with icons from the Hicolor/Gnome Icon Theme.
 
-.. start shields 
+.. start shields
 
 .. list-table::
 	:stub-columns: 1
@@ -30,7 +30,7 @@ This package provides a wxPython wxArtProvider class with icons from the Hicolor
 .. |docs| image:: https://img.shields.io/readthedocs/custom_wx_icons_hicolor/latest?logo=read-the-docs
 	:target: https://custom_wx_icons_hicolor.readthedocs.io/en/latest/?badge=latest
 	:alt: Documentation Status
-	
+
 .. |docs_check| image:: https://github.com/domdfcoding/custom_wx_icons_hicolor/workflows/Docs%20Check/badge.svg
 	:target: https://github.com/domdfcoding/custom_wx_icons_hicolor/actions?query=workflow%3A%22Docs+Check%22
 	:alt: Docs Check Status
@@ -59,7 +59,7 @@ This package provides a wxPython wxArtProvider class with icons from the Hicolor
 	:target: https://pypi.org/project/wx_icons_hicolor/
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/wx_icons_hicolor
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/wx_icons_hicolor?logo=python&logoColor=white
 	:target: https://pypi.org/project/wx_icons_hicolor/
 	:alt: PyPI - Supported Python Versions
 
@@ -72,8 +72,8 @@ This package provides a wxPython wxArtProvider class with icons from the Hicolor
 	:alt: PyPI - Wheel
 
 .. |license| image:: https://img.shields.io/github/license/domdfcoding/custom_wx_icons_hicolor
-	:alt: License
 	:target: https://github.com/domdfcoding/custom_wx_icons_hicolor/blob/master/LICENSE
+	:alt: License
 
 .. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/custom_wx_icons_hicolor
 	:alt: GitHub top language
