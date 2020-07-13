@@ -24,7 +24,6 @@ This takes around 15 minutes to run so be patient.
 #  MA 02110-1301, USA.
 #
 
-
 # stdlib
 import sys
 import os
@@ -33,8 +32,8 @@ import urllib.request
 
 if not pathlib.Path("gnome_icon_builder.py").is_file():
 	urllib.request.urlretrieve(  # nosec
-			"https://raw.githubusercontent.com/domdfcoding/custom_wx_icons/master/gnome_icon_builder.py",
-			"gnome_icon_builder.py")
+		"https://raw.githubusercontent.com/domdfcoding/custom_wx_icons/master/gnome_icon_builder.py",
+		"gnome_icon_builder.py")
 
 sys.path.append(".")
 
