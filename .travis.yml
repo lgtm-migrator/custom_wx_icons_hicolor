@@ -21,8 +21,6 @@ stages:
   - test
   - deploy_pypi
 
-  - deploy_releases
-
 jobs:
   include:
     - stage: deploy_pypi
@@ -39,15 +37,3 @@ jobs:
           secure: lG+Db9/FSrEXDwIOwWMLF3J1ByjHUwFbAfk3wVzfmTzmZ5aGLH79mA32iSbyE5bK99KFbkA9PQTIlQwI4qZnNonbJ/pLoDJYtXxs8NEGeMkn9RH16+YbEquSOTPSopFhGdpMklXTjwmtygUHCgRzvRedk80a48WKgEAyTI9lVOTwKmZiBegaHuLA2Jeq5OKn1TrAj+sKxhQtxy9LLEBi8SmNyx9jpCLhhxWBTNVCyTB0LqzIVp2pfqEakE8gDOS3CZ77z9LxLE/MLzEyl89CSZGh0qAZMG6dl27ZnND0SMLblHv2TP+864wUgLmqWka1fwNm7EIDfwOn+rcJJw8YnuD5xNk+BxouxerzikbRMyE3lsIauUXcj8BM5gTS6paDWraBUBE6C7Mg6ggAUcw6xQFKcq19Z0UPw0Iggcw/2MDsR3ueoA5NW2JGVUjik85FiY48vDB8gTiHVxchj8FkMA5ZcjQf4QZfXLZsZ4vqDwvHq8L0RjB8BRd8LXPAQvp6nEWjTd8TQKzMe7Akga2mkhyRiuN8a1lLxQROGDWK0RpsK7RDuoLk7D5nFrJLvoWNlHH8nTjXa2P6HuzgW/EXon2ar4LRE7Vnb2nWnbiRU3X2UmVtUicXOzW6PJpWF4yeaEszYOduWSgs9V1GkqKouHm0k6S3mNPJi9RnOluCQ+I=
         distributions: "sdist bdist_wheel"
         skip_existing: true
-
-
-    - stage: deploy_releases
-      python: "3.6"
-      install:
-        - pip install PyGithub requests
-      script: skip
-      deploy:
-        on:
-          repo: domdfcoding/custom_wx_icons_hicolor
-        provider: script
-        script: python .ci/copy_pypi_2_github.py || return 1
