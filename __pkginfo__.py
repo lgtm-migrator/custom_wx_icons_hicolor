@@ -44,9 +44,9 @@ modname = "wx_icons_hicolor"
 pypi_name = "wx_icons_hicolor"
 import_name = "wx_icons_hicolor"
 __license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
-short_desc = "Hicolor icon theme for wxPython"
-__author__ = author = "Dominic Davis-Foster"
-author_email = "dominic@davis-foster.co.uk"
+short_desc = 'Hicolor icon theme for wxPython'
+__author__ = author = 'Dominic Davis-Foster'
+author_email = 'dominic@davis-foster.co.uk'
 github_username = "domdfcoding"
 web = github_url = "https://github.com/domdfcoding/custom_wx_icons_hicolor"
 repo_root = pathlib.Path(__file__).parent
