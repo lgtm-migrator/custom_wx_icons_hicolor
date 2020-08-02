@@ -75,7 +75,7 @@ wx_icons_hicolor
 .. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/custom_wx_icons_hicolor
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/custom_wx_icons_hicolor/v0.1.3
+.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/custom_wx_icons_hicolor/v0.1.4
 	:target: https://github.com/domdfcoding/custom_wx_icons_hicolor/pulse
 	:alt: GitHub commits since tagged version
 

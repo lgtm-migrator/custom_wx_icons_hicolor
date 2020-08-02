@@ -39,7 +39,7 @@ __copyright__ = """
 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 """
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 modname = "wx_icons_hicolor"
 pypi_name = "wx_icons_hicolor"
 import_name = "wx_icons_hicolor"
