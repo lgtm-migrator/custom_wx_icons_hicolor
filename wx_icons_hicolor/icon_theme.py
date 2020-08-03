@@ -267,7 +267,8 @@ class IconTheme:
 		Searches for the icon with the given name and size.
 
 		:param icon_name: The name of the icon to find.
-			Any `FreeDesktop Icon Theme Specification <https://specifications.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html>`_
+			Any `FreeDesktop Icon Theme Specification
+			<https://specifications.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html>`_
 			name can be used.
 		:type icon_name: str
 		:param size: The desired size of the icon
@@ -275,10 +276,8 @@ class IconTheme:
 		:param scale: TODO: Currently does nothing
 		:param prefer_this_theme: Return an icon from this theme even if it has to be resized,
 			rather than a correctly sized icon from the parent theme.
-		:type prefer_this_theme:
 
 		:return: The icon if it was found, or None
-		:rtype: Icon or None
 		"""
 
 		icon = self._do_find_icon(icon_name, size, scale, prefer_this_theme)

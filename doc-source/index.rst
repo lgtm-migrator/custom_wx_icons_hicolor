@@ -119,9 +119,9 @@ Installation
 	:caption: Documentation
 
 	usage
-	docs
+	api/index
+	contributing
 	Source
-	Building
 
 
 .. start links

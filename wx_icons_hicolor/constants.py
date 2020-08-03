@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 #
 #  constants.py
+"""
+Constants for use in wx_icons_hicolor and its derivatives.
+"""
 #
 #  Copyright (C) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -36,9 +39,22 @@ from wx_icons_hicolor import Hicolor
 __all__ = ["mime", "theme_index_path", "PathLike", "IconTypes"]
 
 mime = magic.Magic(mime=True)
+"""
+Instance of :class:`magic.Magic` to identify mimetypes of files.
+"""
 
 with importlib_resources.path(Hicolor, "index.theme") as theme_index_path:
 	theme_index_path = pathlib.Path(theme_index_path)
+	"""
+	Path to the theme index file.
+	"""
 
 PathLike = Union[str, pathlib.Path, os.PathLike]
+"""
+Type hint for arguments that take filesystem paths.
+"""
+
 IconTypes = Literal["Fixed", "Scalable", "Threshold"]
+"""
+Type hint fot valid icon type strings.
+"""
