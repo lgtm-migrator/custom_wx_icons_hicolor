@@ -22,23 +22,42 @@
 
 # stdlib
 import base64
-import os
 import pathlib
 import warnings
 from io import BytesIO
-from typing import Any, Dict, Optional, Union
+from typing import Optional
 
 # 3rd party
 import cairosvg  # type: ignore
 import wx  # type: ignore
+from domdf_python_tools.bases import Dictable
+from domdf_python_tools.typing import PathLike
 
 # this package
-from .constants import IconTypes, PathLike, mime
+from .constants import IconTypes, mime
 
 __all__ = ["Icon"]
 
 
-class Icon:
+class Icon(Dictable):
+	"""
+	Represents an icon.
+
+	:param name: The name of the icon.
+	:param path: The path to the icon.
+	:param size: Nominal (unscaled) size of the icon.
+	:param type: The type of icon sizes for the icon.
+		Valid types are ``'Fixed'``, ``'Scalable'`` and ``'Threshold'``.
+		The type decides what other keys in the section are used.
+	:param max_size: Specifies the maximum (unscaled) size that the icon can be scaled to.
+		Defaults to the value of ``Size`` if not present.
+	:no-default max_size:
+	:param min_size: Specifies the minimum (unscaled) size that the icon can be scaled to.
+		Defaults to the value of ``Size`` if not present.
+	:no-default min_size:
+	:param theme: The name of the theme this icon came from.
+	"""
+
 	max_size: int
 	min_size: int
 
@@ -52,27 +71,8 @@ class Icon:
 			min_size: Optional[int] = None,
 			theme: str = ''
 			):
-		"""
 
-		:param name: The name of the icon
-		:type name: str
-		:param path: The path to the icon
-		:param size: Nominal (unscaled) size of the icon.
-		:type size: int
-		:param type: The type of icon sizes for the icon.
-			Valid types are ``"Fixed"``, ``"Scalable"`` and ``"Threshold"``.
-			The type decides what other keys in the section are used.
-			If not specified, the default is ``"Threshold"``.
-		:type type: str
-		:param max_size: Specifies the maximum (unscaled) size that the icon can be scaled to.
-			Defaults to the value of ``Size`` if not present.
-		:type max_size: int
-		:param min_size: Specifies the minimum (unscaled) size that the icon can be scaled to.
-			Defaults to the value of ``Size`` if not present.
-		:type min_size: int
-		:param theme: The name of the theme this icon came from
-		:type theme: str
-		"""
+		super().__init__()
 
 		if not isinstance(path, pathlib.Path):
 			path = pathlib.Path(path)
@@ -106,15 +106,6 @@ class Icon:
 		else:
 			self.min_size = int(size)
 
-	def __iter__(self):
-		yield from self.__dict__.items()
-
-	def __getstate__(self) -> Dict[str, Any]:
-		return self.__dict__
-
-	def __setstate__(self, state):
-		self.__init__(**state)
-
 	@property
 	def __dict__(self):
 		return dict(
@@ -126,12 +117,6 @@ class Icon:
 				min_size=self.min_size,
 				theme=self.theme,
 				)
-
-	def __copy__(self):
-		return self.__class__(**self.__dict__)
-
-	def __deepcopy__(self, memodict={}):
-		return self.__copy__()
 
 	@property
 	def mime_type(self) -> str:
@@ -206,9 +191,6 @@ class Icon:
 
 	def __repr__(self) -> str:
 		return f"Icon({self.name})"
-
-	def __str__(self) -> str:
-		return self.__repr__()
 
 	def __eq__(self, other) -> bool:
 		if isinstance(other, str):

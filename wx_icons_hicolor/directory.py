@@ -23,19 +23,43 @@
 # stdlib
 import configparser
 import pathlib
-from typing import Any, Dict, List, Optional
+from typing import List, Optional
 
 # 3rd party
+from domdf_python_tools.bases import Dictable
+from domdf_python_tools.typing import PathLike
 from memoized_property import memoized_property  # type: ignore
 
 # this package
-from .constants import IconTypes, PathLike, mime
+from .constants import IconTypes, mime
 from .icon import Icon
 
 __all__ = ["Directory"]
 
 
-class Directory:
+class Directory(Dictable):
+	"""
+	Represents a directory containing icons.
+
+	:param path: The absolute path to the directory
+	:param size: Nominal (unscaled) size of the icons in this directory.
+	:param scale: Target scale of the icons in this directory.
+		Any directory with a scale other than 1 should be listed in the ScaledDirectories list rather
+		than Directories for backwards compatibility.
+	:param context: The context the icon is normally used in. This is in detail discussed in the section called “Context”.
+	:param type: The type of icon sizes for the icons in this directory.
+		Valid types are ``'Fixed'``, ``'Scalable'`` and ``'Threshold'``.
+		The type decides what other keys in the section are used.
+	:param max_size: Specifies the maximum (unscaled) size that the icons in this directory can be scaled to.
+		Defaults to the value of Size if not present.
+	:no-default max_size:
+	:param min_size: Specifies the minimum (unscaled) size that the icons in this directory can be scaled to.
+		Defaults to the value of Size if not present.
+	:no-default min_size:
+	:param threshold: The icons in this directory can be used if the size differ at most this much from the desired (unscaled) size. Defaults to 2 if not present.
+	:param theme: The name of the theme this directory is a part of
+	"""
+
 	max_size: int
 	min_size: int
 
@@ -51,31 +75,7 @@ class Directory:
 			threshold: int = 2,
 			theme: str = '',
 			):
-		"""
-
-		:param path: The absolute path to the directory
-		:param size: Nominal (unscaled) size of the icons in this directory.
-		:type size: int
-		:param scale: Target scale of the icons in this directory. Defaults to the value 1 if not present.
-			Any directory with a scale other than 1 should be listed in the ScaledDirectories list rather
-			than Directories for backwards compatibility.
-		:type scale: int, optional
-		:param context: The context the icon is normally used in. This is in detail discussed in the section called “Context”.
-		:type context: str
-		:param type: The type of icon sizes for the icons in this directory.
-			Valid types are Fixed, Scalable and Threshold.
-			The type decides what other keys in the section are used.
-			If not specified, the default is Threshold.
-		:type type: str
-		:param max_size: Specifies the maximum (unscaled) size that the icons in this directory can be scaled to. Defaults to the value of Size if not present.
-		:type max_size: int
-		:param min_size: Specifies the minimum (unscaled) size that the icons in this directory can be scaled to. Defaults to the value of Size if not present.
-		:type min_size: int
-		:param threshold: The icons in this directory can be used if the size differ at most this much from the desired (unscaled) size. Defaults to 2 if not present.
-		:type threshold: int
-		:param theme: The name of the theme this directory is a part of
-		:type theme: str
-		"""
+		super().__init__()
 
 		self.scale: int = int(scale)
 		self.context: str = str(context)
@@ -108,15 +108,6 @@ class Directory:
 		else:
 			self.min_size = size
 
-	def __iter__(self):
-		yield from self.__dict__.items()
-
-	def __getstate__(self) -> Dict[str, Any]:
-		return self.__dict__
-
-	def __setstate__(self, state):
-		self.__init__(**state)
-
 	@property
 	def __dict__(self):
 		return dict(
@@ -130,12 +121,6 @@ class Directory:
 				threshold=self.threshold,
 				theme=self.theme,
 				)
-
-	def __copy__(self):
-		return self.__class__(**self.__dict__)
-
-	def __deepcopy__(self, memodict={}):
-		return self.__copy__()
 
 	@classmethod
 	def from_configparser(cls, config_section: configparser.SectionProxy, theme_content_root: pathlib.Path):
@@ -192,6 +177,3 @@ class Directory:
 
 	def __repr__(self) -> str:
 		return f"Directory({self.path})"
-
-	def __str__(self) -> str:
-		return self.__repr__()

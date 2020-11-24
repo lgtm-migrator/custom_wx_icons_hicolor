@@ -36,7 +36,7 @@ from typing_extensions import Literal
 # this package
 from wx_icons_hicolor import Hicolor
 
-__all__ = ["mime", "theme_index_path", "PathLike", "IconTypes"]
+__all__ = ["mime", "theme_index_path", "IconTypes"]
 
 mime = magic.Magic(mime=True)
 """
@@ -48,11 +48,6 @@ with importlib_resources.path(Hicolor, "index.theme") as theme_index_path:
 	"""
 	Path to the theme index file.
 	"""
-
-PathLike = Union[str, pathlib.Path, os.PathLike]
-"""
-Type hint for arguments that take filesystem paths.
-"""
 
 IconTypes = Literal["Fixed", "Scalable", "Threshold"]
 """

@@ -24,17 +24,46 @@
 import configparser
 import copy
 import pathlib
-from typing import Any, Dict, List, Optional, Sequence
+from typing import Any, List, Optional, Sequence, Type, TypeVar
+
+# 3rd party
+from domdf_python_tools.bases import Dictable
+from domdf_python_tools.typing import PathLike
 
 # this package
 from . import Icon
-from .constants import PathLike, theme_index_path
+from .constants import theme_index_path
 from .directory import Directory
 
 __all__ = ["HicolorIconTheme", "IconTheme"]
 
+_IT = TypeVar("_IT", bound="IconTheme")
 
-class IconTheme:
+
+class IconTheme(Dictable):
+	"""
+	Represents an icon theme.
+
+	:param name: short name of the icon theme, used in e.g. lists when selecting themes.
+	:param comment: longer string describing the theme
+	:param inherits: The name of the theme that this theme inherits from. If an icon name is not found
+		in the current theme, it is searched for in the inherited theme (and recursively in all the
+		inherited themes).
+
+		If no theme is specified implementations are required to add the "hicolor" theme to the
+		inheritance tree. An implementation may optionally add other default themes in between the last
+		specified theme and the hicolor theme.
+	:param directories: list of subdirectories for this theme. For every subdirectory there
+		must be a section in the index.theme file describing that directory.
+	:param scaled_directories: Additional list of subdirectories for this theme, in addition to the ones
+		in Directories. These directories should only be read by implementations supporting scaled
+		directories and was added to keep compatibility with old implementations that don't support these.
+	:type scaled_directories: list of Directory objects, optional
+	:param hidden: Whether to hide the theme in a theme selection user interface. This is used for things
+		such as fallback-themes that are not supposed to be visible to the user.
+	:param example: The name of an icon that should be used as an example of how this theme looks.
+	"""
+
 	inherits: List[str]
 	scaled_directories: List[Directory]
 
@@ -48,33 +77,7 @@ class IconTheme:
 			hidden: bool = False,
 			example: str = '',
 			):
-		"""
-
-		:param name: short name of the icon theme, used in e.g. lists when selecting themes.
-		:type name: str
-		:param comment: longer string describing the theme
-		:type comment: str
-		:param inherits: The name of the theme that this theme inherits from. If an icon name is not found
-			in the current theme, it is searched for in the inherited theme (and recursively in all the
-			inherited themes).
-
-			If no theme is specified implementations are required to add the "hicolor" theme to the
-			inheritance tree. An implementation may optionally add other default themes in between the last
-			specified theme and the hicolor theme.
-		:type inherits: list of str, optional
-		:param directories: list of subdirectories for this theme. For every subdirectory there
-			must be a section in the index.theme file describing that directory.
-		:type directories: list of Directory objects
-		:param scaled_directories: Additional list of subdirectories for this theme, in addition to the ones
-			in Directories. These directories should only be read by implementations supporting scaled
-			directories and was added to keep compatibility with old implementations that don't support these.
-		:type scaled_directories: list of Directory objects, optional
-		:param hidden: Whether to hide the theme in a theme selection user interface. This is used for things
-			such as fallback-themes that are not supposed to be visible to the user.
-		:type hidden: bool, optional
-		:param example: The name of an icon that should be used as an example of how this theme looks.
-		:type example: str, optional
-		"""
+		super().__init__()
 
 		self.name: str = str(name)
 		self.comment: str = str(comment)
@@ -83,7 +86,9 @@ class IconTheme:
 			print(type(directories, type(directories[0])))  # type: ignore
 			raise TypeError("'directories' must be a list of Directory objects")
 		self.directories: Sequence[Directory] = sorted(
-				copy.deepcopy(directories), key=lambda directory: directory.size, reverse=True
+				copy.deepcopy(directories),
+				key=lambda directory: directory.size,
+				reverse=True,
 				)
 
 		if inherits:
@@ -103,15 +108,6 @@ class IconTheme:
 		self.hidden = hidden
 		self.example = example
 
-	def __iter__(self):
-		yield from self.__dict__.items()
-
-	def __getstate__(self) -> Dict[str, Any]:
-		return self.__dict__
-
-	def __setstate__(self, state):
-		self.__init__(**state)
-
 	@property
 	def __dict__(self):
 		return dict(
@@ -123,9 +119,6 @@ class IconTheme:
 				hidden=self.hidden,
 				example=self.example,
 				)
-
-	def __copy__(self):
-		return self.__class__(**self.__dict__)
 
 	def __deepcopy__(self, memodict={}):
 		class_dict = self.__dict__
@@ -142,7 +135,7 @@ class IconTheme:
 		return f"{self.name} Icon Theme"
 
 	@classmethod
-	def from_configparser(cls, theme_index_path: PathLike):
+	def from_configparser(cls: Type[_IT], theme_index_path: PathLike) -> _IT:
 
 		if not isinstance(theme_index_path, pathlib.Path):
 			theme_index_path = pathlib.Path(theme_index_path)
@@ -204,13 +197,10 @@ class IconTheme:
 		:param icon_name: The name of the icon to find.
 			Any `FreeDesktop Icon Theme Specification <https://specifications.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html>`_
 			name can be used.
-		:type icon_name: str
 		:param size: The desired size of the icon
-		:type size: int
 		:param scale: TODO: Currently does nothing
 		:param prefer_this_theme: Return an icon from this theme even if it has to be resized,
 			rather than a correctly sized icon from the parent theme.
-		:type prefer_this_theme: bool
 
 		:return: The icon if it was found, or None
 		"""
@@ -272,14 +262,12 @@ class IconTheme:
 			Any `FreeDesktop Icon Theme Specification
 			<https://specifications.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html>`_
 			name can be used.
-		:type icon_name: str
 		:param size: The desired size of the icon
-		:type size: int
 		:param scale: TODO: Currently does nothing
 		:param prefer_this_theme: Return an icon from this theme even if it has to be resized,
 			rather than a correctly sized icon from the parent theme.
 
-		:return: The icon if it was found, or None
+		:return: The icon if it was found, or :py:obj:`None`.
 		"""
 
 		icon = self._do_find_icon(icon_name, size, scale, prefer_this_theme)
@@ -293,7 +281,7 @@ class IconTheme:
 class HicolorIconTheme(IconTheme):
 
 	@classmethod
-	def create(cls):
+	def create(cls) -> "HicolorIconTheme":
 		"""
 		Create an instance of the Hicolor Icon Theme
 		"""
