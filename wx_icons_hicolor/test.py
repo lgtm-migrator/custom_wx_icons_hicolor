@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+__all__ = ["test_icon_theme", "test_random_icons"]
+
 #
 #  test.py
 #

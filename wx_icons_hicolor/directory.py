@@ -32,6 +32,8 @@ from memoized_property import memoized_property  # type: ignore
 from .constants import IconTypes, PathLike, mime
 from .icon import Icon
 
+__all__ = ["Directory"]
+
 
 class Directory:
 	max_size: int

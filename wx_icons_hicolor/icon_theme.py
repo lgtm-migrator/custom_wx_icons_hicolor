@@ -31,6 +31,8 @@ from . import Icon
 from .constants import PathLike, theme_index_path
 from .directory import Directory
 
+__all__ = ["HicolorIconTheme", "IconTheme"]
+
 
 class IconTheme:
 	inherits: List[str]
