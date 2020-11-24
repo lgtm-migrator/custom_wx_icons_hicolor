@@ -11,10 +11,6 @@ short_desc: 'Hicolor icon theme for wxPython'
 enable_tests: False
 enable_conda: False
 
-exclude_files:
-  - travis
-  - tox
-
 python_deploy_version: 3.6
 
 # Versions to run tests for
@@ -22,8 +18,7 @@ python_versions:
   - '3.6'
   - '3.7'
   - '3.8'
-
-# travis secure password for PyPI
+  - '3.9'
 
 # additional lines for MANIFEST.in
 manifest_additional:
@@ -32,20 +27,13 @@ manifest_additional:
 classifiers:
   - "Topic :: Desktop Environment :: Gnome"
   - "Environment :: X11 Applications :: GTK"
-
   - "Intended Audience :: Developers"
-
   - "Development Status :: 3 - Alpha"
-#  - 'Development Status :: 4 - Beta'
-#  - "Development Status :: 5 - Production/Stable"
-#  - "Development Status :: 6 - Mature"
-#  - "Development Status :: 7 - Inactive"
   - "Topic :: Software Development :: Libraries :: Python Modules"
   - "Topic :: Software Development :: User Interfaces"
 
 additional_ignore:
   - gnome_icon_builder.py
-
 
 imgbot_ignore:
   - "wx_icons_hicolor/*"

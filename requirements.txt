@@ -5,4 +5,4 @@ lxml>=4.5.0
 memoized-property>=1.0.3
 python-magic>=0.4.15
 scour>=0.37
-typing-extensions
+typing-extensions>=3.7.4.3
