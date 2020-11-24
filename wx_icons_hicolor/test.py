@@ -1,6 +1,4 @@
 #!/usr/bin/python3
-__all__ = ["test_icon_theme", "test_random_icons"]
-
 #
 #  test.py
 #
@@ -21,6 +19,8 @@ __all__ = ["test_icon_theme", "test_random_icons"]
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
+
+__all__ = ["test_icon_theme", "test_random_icons"]
 
 freedesktop_naming_spec_list = [
 		"address-book-new",  # The icon used for the action to create a new address book.
@@ -366,11 +366,7 @@ freedesktop_naming_spec_list = [
 def test_icon_theme(theme, show_success=True, show_warning=True):
 
 	# 3rd party
-	import colorama  # type: ignore
-	colorama.init()
-
-	# 3rd party
-	from colorama import Fore  # type: ignore
+	from consolekit.terminal_colours import Fore
 
 	successes = 0
 	warnings = 0

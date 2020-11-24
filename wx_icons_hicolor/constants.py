@@ -29,8 +29,8 @@ import pathlib
 from typing import Union
 
 # 3rd party
-import importlib_resources  # type: ignore
 import magic  # type: ignore
+from domdf_python_tools.compat import importlib_resources
 from typing_extensions import Literal
 
 # this package
