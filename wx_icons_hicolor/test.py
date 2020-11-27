@@ -23,9 +23,10 @@ Functions for testing icon themes.
 #  MA 02110-1301, USA.
 #
 
-__all__ = ["test_icon_theme", "test_random_icons"]
-
+# this package
 from wx_icons_hicolor import IconTheme
+
+__all__ = ["test_icon_theme", "test_random_icons"]
 
 freedesktop_naming_spec_list = [
 		"address-book-new",  # The icon used for the action to create a new address book.

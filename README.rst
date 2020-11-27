@@ -4,7 +4,7 @@ wx_icons_hicolor
 
 .. start short_desc
 
-**Hicolor icon theme for wxPython**
+**Hicolor icon theme for wxPython.**
 
 .. end short_desc
 
