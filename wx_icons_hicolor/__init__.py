@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 #
 #  __init__.py
+"""
+Hicolor icon theme for wxPython.
+"""
 #
 #  Copyright (C) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -81,7 +84,7 @@ class wxHicolorIconTheme(wx.ArtProvider):
 	_hicolor_theme: IconTheme = HicolorIconTheme.create()
 
 	@staticmethod
-	def HasNativeProvider() -> bool:
+	def HasNativeProvider() -> bool:  # noqa: D102
 		return False
 
 	@staticmethod
@@ -99,7 +102,12 @@ class wxHicolorIconTheme(wx.ArtProvider):
 		else:
 			return icon.as_bitmap()
 
-	def CreateBitmap(self, id: Any, client: Any, size: Union[Tuple[int], wx.Size]) -> wx.Bitmap:
+	def CreateBitmap(
+			self,
+			id: Any,  # noqa: A002
+			client: Any,
+			size: Union[Tuple[int], wx.Size],
+			) -> wx.Bitmap:
 		"""
 		Returns the requested resource.
 

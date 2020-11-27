@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 #
 #  test.py
+"""
+Functions for testing icon themes.
+"""
 #
 #  Copyright (C) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -21,6 +24,8 @@
 #
 
 __all__ = ["test_icon_theme", "test_random_icons"]
+
+from wx_icons_hicolor import IconTheme
 
 freedesktop_naming_spec_list = [
 		"address-book-new",  # The icon used for the action to create a new address book.
@@ -363,7 +368,14 @@ freedesktop_naming_spec_list = [
 		]
 
 
-def test_icon_theme(theme, show_success=True, show_warning=True):
+def test_icon_theme(theme: IconTheme, show_success: bool = True, show_warning: bool = True):
+	"""
+	Test an icon theme.
+
+	:param theme:
+	:param show_success:
+	:param show_warning:
+	"""
 
 	# 3rd party
 	from consolekit.terminal_colours import Fore
@@ -413,7 +425,13 @@ def test_icon_theme(theme, show_success=True, show_warning=True):
 			)
 
 
-def test_random_icons(theme):
+def test_random_icons(theme: IconTheme):
+	"""
+	Test an assortment of icons.
+
+	:param theme:
+	"""
+
 	icon = theme.find_icon("stock_todo", 16, None)
 	print(icon, icon.path if icon else '')
 	icon = theme.find_icon("stock_open", 48, None)

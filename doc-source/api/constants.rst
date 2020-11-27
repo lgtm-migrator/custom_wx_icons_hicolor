@@ -13,4 +13,3 @@
 
 .. autovariable:: wx_icons_hicolor.constants.theme_index_path
 	:no-value:
-

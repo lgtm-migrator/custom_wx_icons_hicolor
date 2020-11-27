@@ -6,7 +6,7 @@ email: "dominic@davis-foster.co.uk"
 version: "0.1.4"
 username: "domdfcoding"
 license: 'LGPLv3+'
-short_desc: 'Hicolor icon theme for wxPython'
+short_desc: 'Hicolor icon theme for wxPython.'
 
 enable_tests: False
 enable_conda: False

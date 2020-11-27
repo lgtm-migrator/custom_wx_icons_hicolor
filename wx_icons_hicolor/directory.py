@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 #
 #  directory.py
+"""
+Class to represent directory of icons.
+"""
 #
 #  Copyright (C) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -73,7 +76,7 @@ class Directory(Dictable):
 			size: int,
 			scale: int = 1,
 			context: str = '',
-			type: IconTypes = "Threshold",
+			type: IconTypes = "Threshold",  # noqa: A002
 			max_size: Optional[int] = None,
 			min_size: Optional[int] = None,
 			threshold: int = 2,
@@ -127,7 +130,11 @@ class Directory(Dictable):
 				)
 
 	@classmethod
-	def from_configparser(cls: Type[_D], config_section: configparser.SectionProxy, theme_content_root: pathlib.Path) -> _D:
+	def from_configparser(
+			cls: Type[_D],
+			config_section: configparser.SectionProxy,
+			theme_content_root: pathlib.Path,
+			) -> _D:
 		"""
 		Constructs a :class:`~.Directory` from a
 		`configparser <https://docs.python.org/3/library/configparser.html>`_ section.
@@ -136,7 +143,7 @@ class Directory(Dictable):
 		:param theme_content_root:
 
 		:rtype: :class:`~.Directory`
-		"""
+		"""  # noqa: D400
 
 		if not isinstance(config_section, configparser.SectionProxy):
 			raise TypeError("'config_section' must be a 'configparser.SectionProxy' object")

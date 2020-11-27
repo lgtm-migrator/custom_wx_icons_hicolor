@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 #
 #  icon.py
+"""
+Class to represent icons.
+"""
 #
 #  Copyright (C) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -68,7 +71,7 @@ class Icon(Dictable):
 			name: str,
 			path: PathLike,
 			size: int,
-			type: IconTypes = "Threshold",
+			type: IconTypes = "Threshold",  # noqa: A002
 			max_size: Optional[int] = None,
 			min_size: Optional[int] = None,
 			theme: str = ''
@@ -171,7 +174,7 @@ class Icon(Dictable):
 
 	def as_bitmap(self, size: Optional[int] = None) -> wx.Bitmap:
 		"""
-		Returns the icon as a wxPython bitmap
+		Returns the icon as a wxPython bitmap.
 
 		:param size:
 		"""

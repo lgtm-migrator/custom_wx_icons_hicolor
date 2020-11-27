@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 #
 #  icon_theme.py
+"""
+Class to represent an icon theme.
+"""
 #
 #  Copyright (C) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -295,7 +298,7 @@ class HicolorIconTheme(IconTheme):
 	@classmethod
 	def create(cls) -> "HicolorIconTheme":
 		"""
-		Create an instance of the Hicolor Icon Theme
+		Create an instance of the Hicolor Icon Theme.
 		"""
 
 		return cls.from_configparser(theme_index_path)
