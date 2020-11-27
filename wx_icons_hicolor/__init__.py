@@ -34,6 +34,7 @@ from typing import Any, Tuple, Union
 
 # 3rd party
 import wx  # type: ignore
+from domdf_python_tools.doctools import prettify_docstrings
 
 # this package
 from wx_icons_hicolor import Hicolor
@@ -76,6 +77,7 @@ Gnome Icon Theme Version 3.12.0
 """
 
 
+@prettify_docstrings
 class wxHicolorIconTheme(wx.ArtProvider):
 	"""
 	:class:`wx.ArtProvider` subclass providing the Hicolor Icon Theme.
