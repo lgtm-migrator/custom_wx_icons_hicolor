@@ -24,9 +24,7 @@ Constants for use in wx_icons_hicolor and its derivatives.
 #
 
 # stdlib
-import os
 import pathlib
-from typing import Union
 
 # 3rd party
 import magic  # type: ignore

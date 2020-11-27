@@ -114,6 +114,11 @@ Installation
 
 	usage
 	api/index
+
+.. toctree::
+	:maxdepth: 3
+	:caption: Contributing
+
 	contributing
 	Source
 

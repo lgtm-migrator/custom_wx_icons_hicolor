@@ -28,6 +28,7 @@ from typing import Any, List, Optional, Sequence, Type, TypeVar
 
 # 3rd party
 from domdf_python_tools.bases import Dictable
+from domdf_python_tools.doctools import prettify_docstrings
 from domdf_python_tools.typing import PathLike
 
 # this package
@@ -40,6 +41,7 @@ __all__ = ["HicolorIconTheme", "IconTheme"]
 _IT = TypeVar("_IT", bound="IconTheme")
 
 
+@prettify_docstrings
 class IconTheme(Dictable):
 	"""
 	Represents an icon theme.
@@ -136,6 +138,13 @@ class IconTheme(Dictable):
 
 	@classmethod
 	def from_configparser(cls: Type[_IT], theme_index_path: PathLike) -> _IT:
+		"""
+		Constructs a :class:`~.IconTheme` from config file.
+
+		:param theme_index_path:
+
+		:rtype: :class:`~.IconTheme`
+		"""
 
 		if not isinstance(theme_index_path, pathlib.Path):
 			theme_index_path = pathlib.Path(theme_index_path)
@@ -279,6 +288,9 @@ class IconTheme(Dictable):
 
 
 class HicolorIconTheme(IconTheme):
+	"""
+	The Hicolor Icon Theme.
+	"""
 
 	@classmethod
 	def create(cls) -> "HicolorIconTheme":

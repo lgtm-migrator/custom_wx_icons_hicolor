@@ -63,6 +63,10 @@ __all__ = [
 
 
 def version() -> str:
+	"""
+	Returns the library and theme versions.
+	"""
+
 	return f"""wx_icons_hicolor
 Version {__version__}
 Gnome Icon Theme Version 3.12.0
@@ -70,6 +74,10 @@ Gnome Icon Theme Version 3.12.0
 
 
 class wxHicolorIconTheme(wx.ArtProvider):
+	"""
+	:class:`wx.ArtProvider` subclass providing the Hicolor Icon Theme.
+	"""
+
 	_hicolor_theme: IconTheme = HicolorIconTheme.create()
 
 	@staticmethod
@@ -78,12 +86,28 @@ class wxHicolorIconTheme(wx.ArtProvider):
 
 	@staticmethod
 	def icon2bitmap(icon: Icon, size: int) -> wx.Bitmap:
+		"""
+		Converts an :class:`~.Icon` to a :class:`wx.Bitmap`.
+
+		:param icon:
+		:param size: The desired size of the icon.
+			If the icon isn't scalable the icon is returned in its original size.
+		"""
+
 		if icon.scalable:
 			return icon.as_bitmap(size)
 		else:
 			return icon.as_bitmap()
 
 	def CreateBitmap(self, id: Any, client: Any, size: Union[Tuple[int], wx.Size]) -> wx.Bitmap:
+		"""
+		Returns the requested resource.
+
+		:param id: Unique identifier of the bitmap.
+		:param client: Identifier of the client (i.e. who is asking for the bitmap). This only serves as a hint.
+		:param size: Preferred size of the bitmap. The function may return a bitmap of different dimensions;
+			it will be automatically rescaled to meet client’s request.
+		"""
 
 		icon = self._hicolor_theme.find_icon(id, size[0], None)
 

@@ -7,10 +7,6 @@ API Reference
 .. autofunction:: version
 
 .. autoclass:: wxHicolorIconTheme
-	:members:
-	:inherited-members:
-	:undoc-members:
-
 
 .. toctree::
 	:caption: Submodules

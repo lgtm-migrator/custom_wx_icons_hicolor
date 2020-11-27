@@ -31,6 +31,7 @@ from typing import Optional
 import cairosvg  # type: ignore
 import wx  # type: ignore
 from domdf_python_tools.bases import Dictable
+from domdf_python_tools.doctools import prettify_docstrings
 from domdf_python_tools.typing import PathLike
 
 # this package
@@ -39,6 +40,7 @@ from .constants import IconTypes, mime
 __all__ = ["Icon"]
 
 
+@prettify_docstrings
 class Icon(Dictable):
 	"""
 	Represents an icon.
@@ -120,17 +122,25 @@ class Icon(Dictable):
 
 	@property
 	def mime_type(self) -> str:
+		"""
+		The mime type of the icon.
+		"""
+
 		return str(mime.from_file(str(self.path)))
 
 	@property
 	def scalable(self) -> bool:
+		"""
+		Whether the icon is scalable.
+		"""
+
 		if self.type == "Fixed" and self.mime_type == "image/png":
 			return False
 		return True
 
 	def as_png(self, size: Optional[int] = None) -> BytesIO:
 		"""
-		Returns the icon as a BytesIO object containing PNG image data
+		Returns the icon as a :class:`~io.BytesIO` object containing PNG image data.
 
 		:return: :class:`io.BytesIO` object representing the PNG image.
 		"""
@@ -152,10 +162,9 @@ class Icon(Dictable):
 
 	def as_base64_png(self, size: Optional[int] = None) -> str:
 		"""
-		Returns the icon as a base64-encoded BytesIO object containing PNG image data
+		Returns the icon as a base64-encoded object containing PNG image data.
 
-		:return: Base64-encoded string representing the PNG image
-		:rtype: str
+		:return: Base64-encoded string representing the PNG image.
 		"""
 
 		return str(base64.b64encode(self.as_png(size).getvalue()).decode("utf-8"))
@@ -164,7 +173,7 @@ class Icon(Dictable):
 		"""
 		Returns the icon as a wxPython bitmap
 
-		:rtype: wx.Bitmap
+		:param size:
 		"""
 
 		if not size:

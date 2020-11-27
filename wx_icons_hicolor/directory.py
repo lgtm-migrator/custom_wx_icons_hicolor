@@ -23,10 +23,11 @@
 # stdlib
 import configparser
 import pathlib
-from typing import List, Optional
+from typing import List, Optional, Type, TypeVar
 
 # 3rd party
 from domdf_python_tools.bases import Dictable
+from domdf_python_tools.doctools import prettify_docstrings
 from domdf_python_tools.typing import PathLike
 from memoized_property import memoized_property  # type: ignore
 
@@ -36,7 +37,10 @@ from .icon import Icon
 
 __all__ = ["Directory"]
 
+_D = TypeVar("_D", bound="Directory")
 
+
+@prettify_docstrings
 class Directory(Dictable):
 	"""
 	Represents a directory containing icons.
@@ -123,11 +127,21 @@ class Directory(Dictable):
 				)
 
 	@classmethod
-	def from_configparser(cls, config_section: configparser.SectionProxy, theme_content_root: pathlib.Path):
+	def from_configparser(cls: Type[_D], config_section: configparser.SectionProxy, theme_content_root: pathlib.Path) -> _D:
+		"""
+		Constructs a :class:`~.Directory` from a
+		`configparser <https://docs.python.org/3/library/configparser.html>`_ section.
+
+		:param config_section:
+		:param theme_content_root:
+
+		:rtype: :class:`~.Directory`
+		"""
+
 		if not isinstance(config_section, configparser.SectionProxy):
 			raise TypeError("'config_section' must be a 'configparser.SectionProxy' object")
 
-		path = theme_content_root / pathlib.Path(config_section.name)
+		path = theme_content_root / config_section.name
 		size = int(config_section.get("Size"))
 		scale = int(config_section.get("Scale", fallback='1'))
 		context = config_section.get("Context", fallback='')
@@ -162,6 +176,10 @@ class Directory(Dictable):
 
 	@memoized_property
 	def icons(self) -> List[Icon]:
+		"""
+		Returns a list of icons in this :class:`~.Directory`.
+		"""
+
 		absolute_dir_path = self.path.resolve()
 		# print(absolute_dir_path)
 

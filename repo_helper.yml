@@ -37,3 +37,10 @@ additional_ignore:
 
 imgbot_ignore:
   - "wx_icons_hicolor/*"
+
+intersphinx_mapping:
+ - "'wxpython': ('https://docs.wxpython.org/', None)"
+
+keywords:
+  - wxPython
+  - icons
