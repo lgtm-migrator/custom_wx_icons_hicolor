@@ -106,7 +106,7 @@ class wxHicolorIconTheme(wx.ArtProvider):
 
 	def CreateBitmap(
 			self,
-			id: Any,  # noqa: A002
+			id: Any,  # noqa: A002  # pylint: disable=redefined-builtin
 			client: Any,
 			size: Union[Tuple[int], wx.Size],
 			) -> wx.Bitmap:

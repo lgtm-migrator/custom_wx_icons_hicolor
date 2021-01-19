@@ -76,7 +76,7 @@ class Directory(Dictable):
 			size: int,
 			scale: int = 1,
 			context: str = '',
-			type: IconTypes = "Threshold",  # noqa: A002
+			type: IconTypes = "Threshold",  # noqa: A002  # pylint: disable=redefined-builtin
 			max_size: Optional[int] = None,
 			min_size: Optional[int] = None,
 			threshold: int = 2,
