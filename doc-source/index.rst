@@ -57,8 +57,8 @@ wx_icons_hicolor
 		:workflow: mypy
 		:alt: mypy status
 
-	.. |requires| image:: https://dependency-dash.herokuapp.com/github/domdfcoding/custom_wx_icons_hicolor/badge.svg
-		:target: https://dependency-dash.herokuapp.com/github/domdfcoding/custom_wx_icons_hicolor/
+	.. |requires| image:: https://dependency-dash.repo-helper.uk/github/domdfcoding/custom_wx_icons_hicolor/badge.svg
+		:target: https://dependency-dash.repo-helper.uk/github/domdfcoding/custom_wx_icons_hicolor/
 		:alt: Requirements Status
 
 	.. |codefactor| codefactor-shield::
